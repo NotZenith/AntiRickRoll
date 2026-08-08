@@ -22,6 +22,7 @@ class SettingsManager:
             "auto_start": False,
             "minimize_to_tray": True,
             "plugins_enabled": True,
+            "first_run": True,
             "detection": {
                 "enabled": True,
                 "min_confidence": 0.6,

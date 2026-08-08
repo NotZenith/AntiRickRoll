@@ -8,6 +8,7 @@ from antirickroll.core.settings import SettingsManager
 from antirickroll.core.logger import setup_logging
 from antirickroll.ui.main_window import MainWindow
 from antirickroll.ui.tray_icon import AntiRickRollTray
+from antirickroll.ui.welcome import WelcomeDialog
 from antirickroll.audio.engine import WindowsAudioEngine
 from antirickroll.detection.database.manager import FingerprintDatabase
 from antirickroll.detection.matching.engine import MatchingEngine
@@ -41,7 +42,7 @@ class AntiRickRollApp:
 
         # Initialize UI
         self.main_window = MainWindow(self.audio_engine, self.detection_service, self.db, self.settings)
-        self.tray = AntiRickRollTray(self.main_window)
+        self.tray = AntiRickRollTray(self.main_window, self.detection_service)
         self.notifications = NotificationManager(self.tray, self.settings)
 
         self._connect_signals()
@@ -49,9 +50,9 @@ class AntiRickRollApp:
     def _connect_signals(self):
         self.tray.activated.connect(self._on_tray_activated)
         # Handle Exit from tray
-        self.tray.contextMenu().actions()[1].triggered.connect(self.shutdown)
-        # Handle Restore from tray
-        self.tray.contextMenu().actions()[0].triggered.connect(self.main_window.show)
+        self.tray.exit_action.triggered.connect(self.shutdown)
+        # Handle Pause from tray
+        self.tray.pause_action.triggered.connect(self._toggle_monitoring)
 
         # Connect Detection Pipeline
         self.detection_worker.result_ready.connect(self.detection_service.handle_raw_result)
@@ -69,10 +70,29 @@ class AntiRickRollApp:
             "warning"
         )
 
+    def _toggle_monitoring(self):
+        if self.audio_engine.worker and not self.audio_engine.worker.paused:
+            self.audio_engine.pause()
+            self.tray.pause_action.setText("Resume Monitoring")
+            self.tray.status_action.setText("Status: Paused")
+        else:
+            self.audio_engine.resume()
+            self.tray.pause_action.setText("Pause Monitoring")
+            self.tray.status_action.setText("Status: Monitoring")
+
     def run(self):
         """Starts the application."""
+        if self.settings.get("first_run", True):
+            welcome = WelcomeDialog()
+            if welcome.exec() == WelcomeDialog.Accepted:
+                self.settings.set("first_run", False)
+            else:
+                # User clicked settings or closed - maybe show settings later?
+                pass
+
         self.main_window.show()
         self.tray.show()
+        self.audio_engine.initialize()
         self.detection_worker.start()
         sys.exit(self.app.exec())
 

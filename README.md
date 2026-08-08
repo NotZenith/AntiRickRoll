@@ -1,76 +1,52 @@
-# AntiRickRoll
+# 🛡️ AntiRickRoll
 
-**Real-time audio fingerprint protection against unwanted Rickrolls.**
+**"Never get Rickrolled again."**
 
-AntiRickRoll is a professional Windows application designed to detect and block the famous Rickroll song ("Never Gonna Give You Up") from any audio playing on your computer. It uses advanced Digital Signal Processing (DSP) and spectral landmark hashing to identify audio patterns locally, without uploading any data or requiring an internet connection.
+AntiRickRoll is a professional Windows 11 application that monitors your computer's audio in real-time to detect and block the famous "Never Gonna Give You Up" song. Built for privacy and performance, it analyzes audio locally using advanced spectral peak hashing—no cloud, no microphone, and no recording.
 
 ## 🚀 Beginner Quick Start
 
 **Don't know Python? You don't need it.**
 
-1.  **Download:** Go to the [Releases](https://github.com/NotZenith/AntiRickRoll/releases) page.
-2.  **Run:** Download `AntiRickRoll.zip`, extract it, and run `AntiRickRoll.exe`.
-3.  **Protect:** The application will start monitoring your system audio automatically.
+1.  **Download:** Go to [Releases](https://github.com/NotZenith/AntiRickRoll/releases) and download `AntiRickRoll-v0.6.0.zip`.
+2.  **Run:** Extract the folder and launch `AntiRickRoll.exe`.
+3.  **Protect:** The app will minimize to your system tray and protect you silently.
 
-## ✨ Features
+## ✨ Core Features
 
-- **Windows Loopback Capture:** Captures audio from ANY application (Chrome, Spotify, VLC, etc.) before it hits your speakers.
-- **Privacy First:** All analysis happens locally on your machine. No audio is ever uploaded or recorded.
-- **Deterministic Recognition:** Uses spectral peak hashing for reliable identification, even in noisy environments.
-- **System Tray Integration:** Runs quietly in the background; minimize to the tray for 24/7 protection.
-- **Extensible Plugin System:** Add fingerprints for other sounds (John Cena, Vine Boom, etc.) by dropping a file into the plugins folder.
-- **Modern UI:** A sleek Windows 11-style dark theme with real-time audio visualization.
-
-## 🛠️ Developer Setup
-
-For those who want to build from source or contribute to the project.
-
-### Prerequisites
-- Python 3.9+
-- Git
-
-### Installation
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/NotZenith/AntiRickRoll.git
-    cd AntiRickRoll
-    ```
-2.  **Create a virtual environment:**
-    ```bash
-    python -m venv .venv
-    source .venv/Scripts/activate  # Windows
-    ```
-3.  **Install dependencies:**
-    ```bash
-    pip install -e .[dev]
-    ```
-
-### Running from Source
-```bash
-python -m antirickroll.app.main
-```
-
-### Building the Executable
-```bash
-python scripts/build.py
-```
+- **Windows Loopback Capture:** Intercepts audio directly from the Windows audio engine (Chrome, Spotify, Discord, etc.).
+- **Deterministic Detection:** High-accuracy matching using spectral landmarks (Digital Signal Processing).
+- **Privacy First:**
+    - 🔒 **Local only:** All processing stays on your CPU.
+    - 🔒 **No microphone:** We never request mic permissions.
+    - 🔒 **No telemetry:** We don't track you.
+- **Smart Hysteresis:** Stabilizes detection across multiple audio windows to eliminate false positives.
+- **Extensible:** Drop new fingerprint files into the `plugins` folder to detect other sounds.
 
 ## 🧠 How It Works
 
-AntiRickRoll processes live audio through a modular pipeline:
-1.  **WASAPI Loopback:** Captures system output.
-2.  **FFT & Spectrogram:** Converts time-domain audio to frequency-domain landmarks.
-3.  **Landmark Hashing:** Generates unique hashes based on spectral peaks.
-4.  **Temporal Matching:** Compares live hashes against a local database using a time-offset histogram.
-5.  **Stability Filter:** Confirms detection only after multiple consistent matches to prevent false positives.
+1.  **WASAPI Loopback:** Captures system playback without lag.
+2.  **FFT Analysis:** Converts raw waves into frequency spectrograms.
+3.  **Landmark Hashing:** Identifies unique "constellations" of audio peaks.
+4.  **Temporal Matching:** Matches live hashes against the database using time-offset clustering.
+5.  **Alerting:** Triggers native Windows notifications and a short audio beep.
 
-## 📄 License
+## 🛠️ Developer Workspace
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### Setup
+```bash
+git clone https://github.com/NotZenith/AntiRickRoll.git
+pip install -e .[dev]
+```
 
-## 🤝 Contributing
+### Commands
+- **Run Source:** `python -m antirickroll.app.main`
+- **Run Tests:** `pytest`
+- **Build EXE:** `python scripts/build.py`
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to get started.
+## 📄 License & Privacy
+- **License:** MIT
+- **Privacy Policy:** AntiRickRoll does not collect, store, or transmit audio data.
 
 ---
-*AntiRickRoll is an open-source project dedicated to preserving your sanity in a world of surprise links.*
+*Created with ❤️ to preserve the sanity of the internet.*

@@ -5,6 +5,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt, Slot
 from antirickroll.detection.models import DetectionResult
+from antirickroll.core.states import AppState
 
 class DetectionView(QWidget):
     """Real-time detection dashboard."""
@@ -75,6 +76,22 @@ class DetectionView(QWidget):
         self.service.confidence_updated.connect(self._on_confidence_updated)
         self.service.detection_confirmed.connect(self._on_detection_confirmed)
         self.service.status_updated.connect(self._on_status_updated)
+        self.service.state_changed.connect(self._on_state_changed)
+
+    def _on_state_changed(self, state: AppState):
+        state_map = {
+            AppState.INITIALIZING: ("INITIALIZING", "#888"),
+            AppState.IDLE: ("IDLE", "#888"),
+            AppState.MONITORING: ("MONITORING", "#00ff7f"),
+            AppState.MATCHING: ("MATCHING...", "#ffbb33"),
+            AppState.DETECTED: ("RICKROLL DETECTED!", "#ff4444"),
+            AppState.ERROR: ("ERROR", "#ff4444"),
+            AppState.RECOVERY: ("RECOVERING...", "#0078d4")
+        }
+
+        text, color = state_map.get(state, ("UNKNOWN", "#888"))
+        self.status_lbl.setText(f"Monitoring Status: {text}")
+        self.status_lbl.setStyleSheet(f"font-size: 18px; font-weight: bold; color: {color};")
 
     @Slot(float, str)
     def _on_confidence_updated(self, confidence: float, name: str):
@@ -102,8 +119,5 @@ class DetectionView(QWidget):
 
     @Slot(str)
     def _on_status_updated(self, status: str):
-        self.status_lbl.setText(f"Monitoring Status: {status}")
-        if "DETECTED" in status:
-            self.status_lbl.setStyleSheet("font-size: 18px; color: #ff4444;")
-        else:
-            self.status_lbl.setStyleSheet("font-size: 18px; color: #00ff7f;")
+        # We now use _on_state_changed for the primary status label
+        pass

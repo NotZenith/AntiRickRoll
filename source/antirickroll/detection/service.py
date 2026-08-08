@@ -5,6 +5,7 @@ import time
 from typing import Optional, Dict
 from PySide6.QtCore import QObject, Signal
 from antirickroll.detection.models import DetectionResult
+from antirickroll.core.states import AppState
 
 class DetectionService(QObject):
     """
@@ -17,6 +18,7 @@ class DetectionService(QObject):
     # Emitted for every processing cycle to update UI confidence
     confidence_updated = Signal(float, str)  # confidence, name
     status_updated = Signal(str)
+    state_changed = Signal(AppState)
 
     def __init__(self, settings):
         super().__init__()
@@ -28,12 +30,20 @@ class DetectionService(QObject):
         self.consecutive_matches = 0
         self.last_alert_time = 0.0
         self.is_muted = False
+        self.state = AppState.INITIALIZING
 
         # Filtering parameters from settings
         det_cfg = settings.get("detection", {})
         self.min_confidence = det_cfg.get("min_confidence", 0.6)
         self.confirmation_threshold = 3  # consecutive matches needed
         self.cooldown_period = 30.0      # seconds between alerts for same song
+
+        self._set_state(AppState.IDLE)
+
+    def _set_state(self, state: AppState):
+        if self.state != state:
+            self.state = state
+            self.state_changed.emit(state)
 
     def handle_raw_result(self, result: DetectionResult):
         """Processes a raw result from the detection worker."""
@@ -43,6 +53,7 @@ class DetectionService(QObject):
 
         # Smoothed confidence for UI
         self.confidence_updated.emit(result.confidence, result.name)
+        self._set_state(AppState.MATCHING)
 
         if result.fingerprint_id == self.current_match_id:
             self.consecutive_matches += 1
@@ -63,10 +74,12 @@ class DetectionService(QObject):
         self.current_match_id = None
         self.confidence_updated.emit(0.0, "None")
         self.status_updated.emit("Monitoring...")
+        self._set_state(AppState.MONITORING)
 
     def _confirm_detection(self, result: DetectionResult):
         """Triggers the confirmation if not in cooldown."""
         now = time.time()
+        self._set_state(AppState.DETECTED)
 
         # Check cooldown
         if now - self.last_alert_time < self.cooldown_period:

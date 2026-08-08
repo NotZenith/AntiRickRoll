@@ -43,8 +43,9 @@ def build_executable():
         "--windowed",
         "--name", "AntiRickRoll",
         "--paths", str(SOURCE_DIR),
-        "--add-data", f"{SOURCE_DIR}/antirickroll/ui;antirickroll/ui", # Example for assets if needed
-        # Add icons/sounds when we have them
+        "--add-data", f"{SOURCE_DIR}/antirickroll/ui;antirickroll/ui",
+        "--add-data", f"{PROJECT_ROOT}/assets;assets",
+        "--icon", f"{PROJECT_ROOT}/assets/icons/app.ico",
         str(SOURCE_DIR / "antirickroll" / "app" / "main.py")
     ]
 

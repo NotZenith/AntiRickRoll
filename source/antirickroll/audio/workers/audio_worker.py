@@ -8,6 +8,7 @@ from antirickroll.audio.buffer.circular import CircularBuffer
 from antirickroll.audio.processing.pipeline import AudioPipeline
 from antirickroll.audio.processing.stages import ChannelConverter, Resampler
 from antirickroll.audio.devices.manager import AudioDeviceManager
+from antirickroll.core.states import AudioState
 
 class AudioCaptureWorker(QThread):
     """
@@ -19,6 +20,7 @@ class AudioCaptureWorker(QThread):
     waveform_data = Signal(np.ndarray)  # Raw data for visualization
     metrics_updated = Signal(dict)      # Real-time metrics
     status_changed = Signal(str, bool)  # Status message and is_active flag
+    state_changed = Signal(AudioState)
     error_occurred = Signal(str)        # Error messages
 
     def __init__(self, settings_manager):
@@ -29,6 +31,7 @@ class AudioCaptureWorker(QThread):
 
         self.running = False
         self.paused = False
+        self.state = AudioState.STOPPED
 
         # Audio configuration (defaults)
         self.sample_rate = 44100
@@ -45,41 +48,49 @@ class AudioCaptureWorker(QThread):
         """Main loop for the capture worker."""
         self.running = True
         self.logger.info("Audio capture worker started.")
+        self._set_state(AudioState.STARTING)
 
         try:
             self._start_capture()
         except Exception as e:
             self.logger.exception("Failed to start audio capture")
             self.error_occurred.emit(str(e))
+            self._set_state(AudioState.ERROR)
             self.running = False
-            return
 
         while self.running:
             if self.paused:
+                if self.state != AudioState.PAUSED:
+                    self._set_state(AudioState.PAUSED)
                 self.msleep(100)
                 continue
 
-            # The actual capture is handled by the sounddevice callback
-            # We use this loop to emit periodic metrics and health checks
+            # Periodic health checks and metrics
             self.msleep(100)
             self._emit_metrics()
             self._check_device_change()
 
+        self._stop_capture()
+        self._set_state(AudioState.STOPPED)
+        self.logger.info("Audio capture worker stopped.")
+
+    def _set_state(self, state: AudioState):
+        self.state = state
+        self.state_changed.emit(state)
+
     def _check_device_change(self):
         """Polls for default device changes."""
         try:
-            # Check if default output device changed
             current_default = sd.default.device[1]
             if hasattr(self, '_last_default_device') and current_default != self._last_default_device:
                 self.logger.info("Default playback device changed, restarting stream...")
+                self._set_state(AudioState.STARTING)
                 self._stop_capture()
                 self._start_capture()
             self._last_default_device = current_default
         except Exception as e:
             self.logger.error(f"Error checking device change: {e}")
-
-        self._stop_capture()
-        self.logger.info("Audio capture worker stopped.")
+            self._set_state(AudioState.ERROR)
 
     def _start_capture(self):
         """Initializes and starts the WASAPI loopback stream."""
@@ -106,6 +117,7 @@ class AudioCaptureWorker(QThread):
             blocksize=self.frame_size
         )
         self._stream.start()
+        self._set_state(AudioState.CAPTURING)
         self.status_changed.emit(f"Capturing: {device_info['name']}", True)
 
     def _stop_capture(self):

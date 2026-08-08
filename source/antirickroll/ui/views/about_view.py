@@ -41,10 +41,24 @@ class AboutView(QWidget):
         layout.addSpacing(30)
 
         # Links
-        github_btn = QPushButton("View on GitHub")
-        github_btn.setFixedSize(150, 40)
+        btn_layout = QHBoxLayout()
+        github_btn = QPushButton("GitHub Repository")
         github_btn.clicked.connect(lambda: webbrowser.open("https://github.com/NotZenith/AntiRickRoll"))
-        layout.addWidget(github_btn, alignment=Qt.AlignCenter)
+
+        issue_btn = QPushButton("Report a Problem")
+        issue_btn.clicked.connect(lambda: webbrowser.open("https://github.com/NotZenith/AntiRickRoll/issues"))
+
+        btn_layout.addWidget(github_btn)
+        btn_layout.addWidget(issue_btn)
+        layout.addLayout(btn_layout, alignment=Qt.AlignCenter)
+
+        layout.addSpacing(20)
+
+        privacy_link = QPushButton("Privacy Policy")
+        privacy_link.setFlat(True)
+        privacy_link.setStyleSheet("color: #0078d4; text-decoration: underline;")
+        privacy_link.clicked.connect(self._show_privacy)
+        layout.addWidget(privacy_link, alignment=Qt.AlignCenter)
 
         layout.addSpacing(20)
 
@@ -55,3 +69,17 @@ class AboutView(QWidget):
         layout.addWidget(footer, alignment=Qt.AlignCenter)
 
         layout.addStretch()
+
+    def _show_privacy(self):
+        from PySide6.QtWidgets import QMessageBox
+        msg = QMessageBox(self)
+        msg.setWindowTitle("AntiRickRoll Privacy Policy")
+        msg.setText(
+            "<b>AntiRickRoll is built with privacy as a top priority.</b><br><br>"
+            "1. <b>Local Processing:</b> All audio analysis is performed on your computer.<br>"
+            "2. <b>No Uploads:</b> No audio, fingerprints, or listening history are ever sent to any server.<br>"
+            "3. <b>No Microphone:</b> The app only uses Windows Loopback to listen to playback audio.<br>"
+            "4. <b>No Telemetry:</b> We do not collect usage statistics or crash reports automatically.<br><br>"
+            "Your data stays yours."
+        )
+        msg.exec()

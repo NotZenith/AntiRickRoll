@@ -2,19 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.5.0] - 2026-08-08
+## [0.6.0] - 2026-08-08
 
 ### Added
-- **Production Packaging:** Established professional Windows distribution pipeline.
-- **Build Script:** Automated EXE generation using PyInstaller.
-- **Restructured Repository:** Clean separation of source, tests, assets, and docs.
-- **Path Resolution:** Implemented professional user data and resource path handling.
-- **GitHub Release Workflow:** Automated CI/CD for creating production releases.
-- **Enhanced Documentation:** Redesigned README and added technical guides in `docs/`.
+- **Production Hardening:** Comprehensive reliability pass on the audio engine.
+- **Welcome Experience:** New onboarding dialog for first-time users.
+- **Categorized Settings:** Organized settings into General, Detection, Alerts, and Privacy.
+- **Enhanced System Tray:** Full-featured tray menu with pause, mute, and navigation.
+- **Privacy Focus:** Dedicated privacy section and "Local Only" documentation.
+- **Asset Bundling:** Support for icons and alert sounds in the executable build.
 
 ### Fixed
-- Improved import structure to support modular packaging.
-- Resolved pathing issues when running as a bundled executable.
+- Robust recovery for disconnected audio devices.
+- Improved sliding-window detection stability.
+- Fixed several cross-thread signaling issues in the GUI.
+
+## [0.5.0] - 2026-08-08
 
 ## [0.4.0] - 2026-08-08
 

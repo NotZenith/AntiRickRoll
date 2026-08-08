@@ -85,5 +85,12 @@ class MainWindow(QMainWindow):
 
     def _on_nav_changed(self, label: str):
         logging.info(f"Navigation changed to: {label}")
-        indices = {"Status": 0, "Stats": 1, "Detection": 2, "Settings": 3, "Plugins": 4, "About": 5}
+        indices = {
+            "Status": 0,
+            "Stats": 1,
+            "Detection": 2,
+            "Settings": 3,
+            "Plugins": 4,
+            "About": 5
+        }
         self.content_area.setCurrentIndex(indices.get(label, 0))
