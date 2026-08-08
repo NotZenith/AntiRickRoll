@@ -7,13 +7,18 @@ from ui.styles import DARK_THEME
 from ui.views.status_view import StatusView
 from ui.views.stats_view import StatsView
 from ui.views.dev_panel import DevPanel
+from ui.views.detection_view import DetectionView
+from ui.views.plugins_view import PluginsView
+from ui.views.settings_view import SettingsView
 from PySide6.QtGui import QShortcut, QKeySequence
 
 class MainWindow(QMainWindow):
     """Main window with sidebar navigation and content area."""
-    def __init__(self, audio_engine, settings):
+    def __init__(self, audio_engine, detection_service, database, settings):
         super().__init__()
         self.audio_engine = audio_engine
+        self.detection_service = detection_service
+        self.db = database
         self.settings = settings
 
         self.setWindowTitle("AntiRickRoll")
@@ -39,12 +44,15 @@ class MainWindow(QMainWindow):
         # Real views
         self.status_view = StatusView(self.audio_engine)
         self.stats_view = StatsView(self.audio_engine)
+        self.detection_view = DetectionView(self.detection_service)
+        self.plugins_view = PluginsView(self.db)
+        self.settings_view = SettingsView(self.settings)
 
         self.content_area.addWidget(self.status_view)
         self.content_area.addWidget(self.stats_view)
-        self.content_area.addWidget(QLabel("Detection View"))
-        self.content_area.addWidget(QLabel("Settings View"))
-        self.content_area.addWidget(QLabel("Plugins View"))
+        self.content_area.addWidget(self.detection_view)
+        self.content_area.addWidget(self.settings_view)
+        self.content_area.addWidget(self.plugins_view)
         self.content_area.addWidget(QLabel("About View"))
 
         self.sidebar.nav_changed.connect(self._on_nav_changed)
@@ -55,6 +63,17 @@ class MainWindow(QMainWindow):
     def _setup_shortcuts(self):
         self.dev_shortcut = QShortcut(QKeySequence("Ctrl+Shift+D"), self)
         self.dev_shortcut.activated.connect(self._toggle_dev_panel)
+
+        self.mute_shortcut = QShortcut(QKeySequence("Ctrl+M"), self)
+        self.mute_shortcut.activated.connect(self._toggle_mute)
+
+        self.reload_shortcut = QShortcut(QKeySequence("Ctrl+R"), self)
+        self.reload_shortcut.activated.connect(self.plugins_view.refresh_list)
+
+    def _toggle_mute(self):
+        is_muted = self.detection_service.toggle_mute()
+        msg = "Alerts Muted" if is_muted else "Alerts Unmuted"
+        self.statusBar().showMessage(msg, 3000)
 
     def _toggle_dev_panel(self):
         if self.dev_panel.isVisible():

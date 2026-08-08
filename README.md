@@ -40,7 +40,21 @@ python -m detection.cli generate path/to/audio.wav --name "Never Gonna Give You 
 
 The generated `.json` package will be saved in `plugins/fingerprints/` and automatically loaded by the application.
 
-## Features
+## Real-Time Detection
+
+AntiRickRoll continuously monitors Windows playback audio in the background.
+
+### Live Pipeline:
+1.  **Capture:** Audio is captured using WASAPI Loopback.
+2.  **Streaming Analysis:** A sliding window analysis is performed on the live buffer.
+3.  **Stability Filter:** Detections are confirmed only after multiple consistent matches, reducing false positives.
+4.  **Alerts:** Native Windows notifications and audio beeps trigger upon confirmation.
+
+### Features
+- **Background Monitoring:** Continues working in the system tray.
+- **Stability Hysteresis:** Confirms matches across multiple spectral windows.
+- **Customizable Thresholds:** Adjust sensitivity and confidence in Settings.
+- **Developer Diagnostics:** View real-time spectrograms and hash matches (Ctrl+Shift+D).
 
 - **Windows Loopback Capture**: Capture ANY system audio using WASAPI.
 - **Real-time Visualization**: Smooth waveform and peak levels.

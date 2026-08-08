@@ -9,6 +9,11 @@ from core.logger import setup_logging
 from ui.main_window import MainWindow
 from ui.tray_icon import AntiRickRollTray
 from audio.engine import WindowsAudioEngine
+from detection.database.manager import FingerprintDatabase
+from detection.matching.engine import MatchingEngine
+from detection.workers.detection_worker import DetectionWorker
+from detection.service import DetectionService
+from core.notifications import NotificationManager
 
 class AntiRickRollApp:
     """Handles application lifecycle, core components, and UI."""
@@ -27,9 +32,17 @@ class AntiRickRollApp:
         # Initialize Audio Engine
         self.audio_engine = WindowsAudioEngine(self.settings)
 
+        # Initialize Detection Engine
+        self.db = FingerprintDatabase(Path("plugins/fingerprints"))
+        self.db.load_all()
+        self.matcher = MatchingEngine(self.db)
+        self.detection_worker = DetectionWorker(self.audio_engine, self.matcher, self.settings)
+        self.detection_service = DetectionService(self.settings)
+
         # Initialize UI
-        self.main_window = MainWindow(self.audio_engine, self.settings)
+        self.main_window = MainWindow(self.audio_engine, self.detection_service, self.db, self.settings)
         self.tray = AntiRickRollTray(self.main_window)
+        self.notifications = NotificationManager(self.tray, self.settings)
 
         self._connect_signals()
 
@@ -40,19 +53,34 @@ class AntiRickRollApp:
         # Handle Restore from tray
         self.tray.contextMenu().actions()[0].triggered.connect(self.main_window.show)
 
+        # Connect Detection Pipeline
+        self.detection_worker.result_ready.connect(self.detection_service.handle_raw_result)
+        self.detection_service.detection_confirmed.connect(self._on_detection_confirmed)
+
     def _on_tray_activated(self, reason):
         if reason == AntiRickRollTray.Trigger:
             self.main_window.show()
+
+    def _on_detection_confirmed(self, result):
+        self.notifications.play_alert_sound()
+        self.notifications.notify(
+            "AntiRickRoll Alert!",
+            f"Detected: {result.name} by {result.artist}\nConfidence: {int(result.confidence*100)}%",
+            "warning"
+        )
 
     def run(self):
         """Starts the application."""
         self.main_window.show()
         self.tray.show()
+        self.detection_worker.start()
         sys.exit(self.app.exec())
 
     def shutdown(self):
         """Gracefully shuts down the application."""
         logging.info("Shutting down...")
+        self.detection_worker.stop()
+        self.audio_engine.shutdown()
         self.settings.save()
         self.app.quit()
 
