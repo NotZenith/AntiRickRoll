@@ -3,6 +3,9 @@
 import pytest
 from PySide6.QtWidgets import QApplication
 from ui.main_window import MainWindow
+from audio.engine import WindowsAudioEngine
+from core.settings import SettingsManager
+from pathlib import Path
 
 @pytest.fixture(scope="session")
 def qapp():
@@ -11,8 +14,10 @@ def qapp():
         app = QApplication([])
     yield app
 
-def test_main_window_init(qapp):
-    window = MainWindow()
+def test_main_window_init(qapp, tmp_path):
+    settings = SettingsManager(tmp_path / "settings.json")
+    engine = WindowsAudioEngine(settings)
+    window = MainWindow(engine, settings)
     assert window.windowTitle() == "AntiRickRoll"
     assert window.sidebar is not None
     assert window.content_area is not None

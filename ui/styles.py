@@ -26,4 +26,18 @@ QPushButton:hover {
 QLabel {
     color: #e0e0e0;
 }
+
+QGroupBox {
+    border: 1px solid #333;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #0078d4;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+}
 """

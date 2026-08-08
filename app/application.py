@@ -8,6 +8,7 @@ from core.settings import SettingsManager
 from core.logger import setup_logging
 from ui.main_window import MainWindow
 from ui.tray_icon import AntiRickRollTray
+from audio.engine import WindowsAudioEngine
 
 class AntiRickRollApp:
     """Handles application lifecycle, core components, and UI."""
@@ -23,8 +24,11 @@ class AntiRickRollApp:
         setup_logging(self.app_dir / "logs" / "app.log")
         self.settings = SettingsManager(self.app_dir / "config" / "settings.json")
 
+        # Initialize Audio Engine
+        self.audio_engine = WindowsAudioEngine(self.settings)
+
         # Initialize UI
-        self.main_window = MainWindow()
+        self.main_window = MainWindow(self.audio_engine, self.settings)
         self.tray = AntiRickRollTray(self.main_window)
 
         self._connect_signals()
