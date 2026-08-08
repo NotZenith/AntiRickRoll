@@ -4,10 +4,10 @@ import time
 import numpy as np
 import pytest
 from unittest.mock import MagicMock
-from detection.service import DetectionService
-from detection.models import DetectionResult, FingerprintPackage, FingerprintMetadata
-from detection.database.manager import FingerprintDatabase
-from detection.matching.engine import MatchingEngine
+from antirickroll.detection.service import DetectionService
+from antirickroll.detection.models import DetectionResult, FingerprintPackage, FingerprintMetadata
+from antirickroll.detection.database.manager import FingerprintDatabase
+from antirickroll.detection.matching.engine import MatchingEngine
 
 class MockSettings:
     def get(self, key, default=None):

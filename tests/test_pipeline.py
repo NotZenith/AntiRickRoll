@@ -2,8 +2,8 @@
 
 import numpy as np
 import pytest
-from audio.processing.pipeline import AudioPipeline
-from audio.processing.stages import ChannelConverter, Normalizer
+from antirickroll.audio.processing.pipeline import AudioPipeline
+from antirickroll.audio.processing.stages import ChannelConverter, Normalizer
 
 def test_pipeline_processing():
     pipeline = AudioPipeline()

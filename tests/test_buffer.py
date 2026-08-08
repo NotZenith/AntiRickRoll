@@ -2,7 +2,7 @@
 
 import numpy as np
 import pytest
-from audio.buffer.circular import CircularBuffer
+from antirickroll.audio.buffer.circular import CircularBuffer
 
 def test_buffer_write_read():
     buffer = CircularBuffer(capacity=100, channels=1)

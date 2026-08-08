@@ -1,86 +1,76 @@
 # AntiRickRoll
 
-A production-quality Windows application to detect and prevent RickRolls using audio fingerprinting and real-time monitoring.
+**Real-time audio fingerprint protection against unwanted Rickrolls.**
 
-## Architecture
+AntiRickRoll is a professional Windows application designed to detect and block the famous Rickroll song ("Never Gonna Give You Up") from any audio playing on your computer. It uses advanced Digital Signal Processing (DSP) and spectral landmark hashing to identify audio patterns locally, without uploading any data or requiring an internet connection.
 
-This project follows **Clean Architecture** and **SOLID** principles.
+## 🚀 Beginner Quick Start
 
-- **app/**: Application entry point and lifecycle management.
-- **core/**: Central business logic, settings, logging, and error handling.
-- **audio/**: Industrial-grade Windows loopback capture and processing.
-  - **capture/**: WASAPI loopback implementation.
-  - **processing/**: Modular pipeline (Normalization, Resampling, Channel conversion).
-  - **buffer/**: Thread-safe circular buffer with overflow detection.
-  - **devices/**: Windows device manager with auto-reconnect.
-  - **visualization/**: Real-time waveform and peak meters.
-- **core/**: Central business logic, settings, logging, and error handling.
-- **ui/**: PySide6 modern dark theme user interface with real-time feedback.
-- **detection/**: Core logic for fingerprinting (Interfaces only).
-- **plugins/**: Extensible plugin system.
-- **assets/**: Static resources like icons and stylesheets.
-- **config/**: Default configuration files.
+**Don't know Python? You don't need it.**
 
-## Fingerprinting Engine
+1.  **Download:** Go to the [Releases](https://github.com/NotZenith/AntiRickRoll/releases) page.
+2.  **Run:** Download `AntiRickRoll.zip`, extract it, and run `AntiRickRoll.exe`.
+3.  **Protect:** The application will start monitoring your system audio automatically.
 
-AntiRickRoll uses a deterministic spectral peak landmark hashing system (similar to Shazam) to recognize audio.
+## ✨ Features
 
-### How it works:
-1.  **Spectrogram:** Audio is converted to the frequency domain using STFT.
-2.  **Peaks:** Local maxima are identified in the spectrogram.
-3.  **Hashing:** Peaks are paired into landmarks and hashed to create a robust fingerprint.
-4.  **Matching:** Live hashes are compared against the database using time-offset histograms.
+- **Windows Loopback Capture:** Captures audio from ANY application (Chrome, Spotify, VLC, etc.) before it hits your speakers.
+- **Privacy First:** All analysis happens locally on your machine. No audio is ever uploaded or recorded.
+- **Deterministic Recognition:** Uses spectral peak hashing for reliable identification, even in noisy environments.
+- **System Tray Integration:** Runs quietly in the background; minimize to the tray for 24/7 protection.
+- **Extensible Plugin System:** Add fingerprints for other sounds (John Cena, Vine Boom, etc.) by dropping a file into the plugins folder.
+- **Modern UI:** A sleek Windows 11-style dark theme with real-time audio visualization.
 
-### Fingerprint Generator CLI
-You can generate your own fingerprint packages for the application:
+## 🛠️ Developer Setup
 
+For those who want to build from source or contribute to the project.
+
+### Prerequisites
+- Python 3.9+
+- Git
+
+### Installation
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/NotZenith/AntiRickRoll.git
+    cd AntiRickRoll
+    ```
+2.  **Create a virtual environment:**
+    ```bash
+    python -m venv .venv
+    source .venv/Scripts/activate  # Windows
+    ```
+3.  **Install dependencies:**
+    ```bash
+    pip install -e .[dev]
+    ```
+
+### Running from Source
 ```bash
-python -m detection.cli generate path/to/audio.wav --name "Never Gonna Give You Up" --artist "Rick Astley"
+python -m antirickroll.app.main
 ```
 
-The generated `.json` package will be saved in `plugins/fingerprints/` and automatically loaded by the application.
+### Building the Executable
+```bash
+python scripts/build.py
+```
 
-## Real-Time Detection
+## 🧠 How It Works
 
-AntiRickRoll continuously monitors Windows playback audio in the background.
+AntiRickRoll processes live audio through a modular pipeline:
+1.  **WASAPI Loopback:** Captures system output.
+2.  **FFT & Spectrogram:** Converts time-domain audio to frequency-domain landmarks.
+3.  **Landmark Hashing:** Generates unique hashes based on spectral peaks.
+4.  **Temporal Matching:** Compares live hashes against a local database using a time-offset histogram.
+5.  **Stability Filter:** Confirms detection only after multiple consistent matches to prevent false positives.
 
-### Live Pipeline:
-1.  **Capture:** Audio is captured using WASAPI Loopback.
-2.  **Streaming Analysis:** A sliding window analysis is performed on the live buffer.
-3.  **Stability Filter:** Detections are confirmed only after multiple consistent matches, reducing false positives.
-4.  **Alerts:** Native Windows notifications and audio beeps trigger upon confirmation.
+## 📄 License
 
-### Features
-- **Background Monitoring:** Continues working in the system tray.
-- **Stability Hysteresis:** Confirms matches across multiple spectral windows.
-- **Customizable Thresholds:** Adjust sensitivity and confidence in Settings.
-- **Developer Diagnostics:** View real-time spectrograms and hash matches (Ctrl+Shift+D).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-- **Windows Loopback Capture**: Capture ANY system audio using WASAPI.
-- **Real-time Visualization**: Smooth waveform and peak levels.
-- **Live Metrics**: Sample rate, channels, latency, and buffer health.
-- **Auto-Reconnect**: Automatically handles device changes.
-- **Clean Architecture**: Decoupled, modular, and unit-tested.
-- **System Tray Integration**: Minimize to tray for background monitoring.
+## 🤝 Contributing
 
-## Setup
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to get started.
 
-1. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. Run the application:
-   ```bash
-   python -m app.main
-   ```
-
-## Roadmap
-
-- [ ] Core Audio Capture Engine
-- [ ] Fingerprint Database Plugin
-- [ ] Real-time Alert System
-- [ ] Advanced Settings UI
-
-## License
-
-MIT
+---
+*AntiRickRoll is an open-source project dedicated to preserving your sanity in a world of surprise links.*

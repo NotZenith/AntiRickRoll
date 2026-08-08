@@ -1,8 +1,12 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "anti-rickroll"
-version = "0.4.0"
-description = "A production-quality Windows application to detect and prevent RickRolls."
-authors = [{ name = "AntiRickRoll Team" }]
+name = "antirickroll"
+version = "0.5.0"
+description = "Real-time audio fingerprint protection against unwanted Rickrolls."
+authors = [{ name = "AntiRickRoll Team", email = "team@antirickroll.org" }]
 license = { text = "MIT" }
 readme = "README.md"
 requires-python = ">=3.9"
@@ -22,7 +26,15 @@ dev = [
     "ruff>=0.1.0",
     "black>=23.0.0",
     "mypy>=1.0.0",
+    "pyinstaller>=6.0.0",
 ]
+
+[project.scripts]
+antirickroll = "antirickroll.app.main:main"
+
+[tool.setuptools.packages.find]
+where = ["source"]
+include = ["antirickroll*"]
 
 [tool.ruff]
 line-length = 100
@@ -40,3 +52,4 @@ disallow_untyped_defs = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = "test_*.py"
+pythonpath = ["source"]

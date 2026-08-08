@@ -2,7 +2,7 @@
 
 import pytest
 from pathlib import Path
-from core.settings import SettingsManager
+from antirickroll.core.settings import SettingsManager
 
 def test_settings_default(tmp_path):
     config_file = tmp_path / "settings.json"

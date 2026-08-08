@@ -2,9 +2,9 @@
 
 import pytest
 from PySide6.QtWidgets import QApplication
-from ui.main_window import MainWindow
-from audio.engine import WindowsAudioEngine
-from core.settings import SettingsManager
+from antirickroll.ui.main_window import MainWindow
+from antirickroll.audio.engine import WindowsAudioEngine
+from antirickroll.core.settings import SettingsManager
 from pathlib import Path
 
 @pytest.fixture(scope="session")

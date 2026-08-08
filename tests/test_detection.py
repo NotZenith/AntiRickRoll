@@ -3,12 +3,12 @@
 import numpy as np
 import pytest
 from pathlib import Path
-from detection.analysis.spectrogram import SpectrogramGenerator
-from detection.generator.peaks import PeakDetector
-from detection.hashing.landmark import LandmarkHasher
-from detection.database.manager import FingerprintDatabase
-from detection.matching.engine import MatchingEngine
-from detection.models import FingerprintPackage, FingerprintMetadata
+from antirickroll.detection.analysis.spectrogram import SpectrogramGenerator
+from antirickroll.detection.generator.peaks import PeakDetector
+from antirickroll.detection.hashing.landmark import LandmarkHasher
+from antirickroll.detection.database.manager import FingerprintDatabase
+from antirickroll.detection.matching.engine import MatchingEngine
+from antirickroll.detection.models import FingerprintPackage, FingerprintMetadata
 
 def test_spectrogram_gen():
     gen = SpectrogramGenerator(n_fft=1024, hop_length=256)
