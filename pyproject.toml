@@ -1,0 +1,36 @@
+[project]
+name = "anti-rickroll"
+version = "0.1.0"
+description = "A production-quality Windows application to detect and prevent RickRolls."
+authors = [{ name = "AntiRickRoll Team" }]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "PySide6>=6.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "ruff>=0.1.0",
+    "black>=23.0.0",
+    "mypy>=1.0.0",
+]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "SIM", "RET"]
+
+[tool.black]
+line-length = 100
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
