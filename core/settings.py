@@ -21,7 +21,14 @@ class SettingsManager:
             "sensitivity": 0.8,
             "auto_start": False,
             "minimize_to_tray": True,
-            "plugins_enabled": True
+            "plugins_enabled": True,
+            "detection": {
+                "enabled": True,
+                "min_confidence": 0.6,
+                "fft_size": 2048,
+                "hop_length": 512,
+                "max_peaks": 500
+            }
         }
 
     def load(self) -> None:

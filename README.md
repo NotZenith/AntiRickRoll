@@ -21,6 +21,25 @@ This project follows **Clean Architecture** and **SOLID** principles.
 - **assets/**: Static resources like icons and stylesheets.
 - **config/**: Default configuration files.
 
+## Fingerprinting Engine
+
+AntiRickRoll uses a deterministic spectral peak landmark hashing system (similar to Shazam) to recognize audio.
+
+### How it works:
+1.  **Spectrogram:** Audio is converted to the frequency domain using STFT.
+2.  **Peaks:** Local maxima are identified in the spectrogram.
+3.  **Hashing:** Peaks are paired into landmarks and hashed to create a robust fingerprint.
+4.  **Matching:** Live hashes are compared against the database using time-offset histograms.
+
+### Fingerprint Generator CLI
+You can generate your own fingerprint packages for the application:
+
+```bash
+python -m detection.cli generate path/to/audio.wav --name "Never Gonna Give You Up" --artist "Rick Astley"
+```
+
+The generated `.json` package will be saved in `plugins/fingerprints/` and automatically loaded by the application.
+
 ## Features
 
 - **Windows Loopback Capture**: Capture ANY system audio using WASAPI.
