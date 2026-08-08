@@ -63,6 +63,20 @@ class AudioCaptureWorker(QThread):
             # We use this loop to emit periodic metrics and health checks
             self.msleep(100)
             self._emit_metrics()
+            self._check_device_change()
+
+    def _check_device_change(self):
+        """Polls for default device changes."""
+        try:
+            # Check if default output device changed
+            current_default = sd.default.device[1]
+            if hasattr(self, '_last_default_device') and current_default != self._last_default_device:
+                self.logger.info("Default playback device changed, restarting stream...")
+                self._stop_capture()
+                self._start_capture()
+            self._last_default_device = current_default
+        except Exception as e:
+            self.logger.error(f"Error checking device change: {e}")
 
         self._stop_capture()
         self.logger.info("Audio capture worker stopped.")
