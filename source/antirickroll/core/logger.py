@@ -9,6 +9,11 @@ from typing import Optional
 def setup_logging(log_file: Optional[Path] = None) -> None:
     """Sets up rotating file logging and stream logging."""
     logger = logging.getLogger()
+
+    # Avoid duplicate handlers if setup is called multiple times
+    if logger.hasHandlers():
+        logger.handlers.clear()
+
     logger.setLevel(logging.INFO)
 
     formatter = logging.Formatter(
