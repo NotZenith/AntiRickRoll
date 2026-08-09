@@ -1,0 +1,1 @@
+Run scripts/build.py to generate AntiRickRoll.exe in this folder.
