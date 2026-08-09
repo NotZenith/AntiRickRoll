@@ -10,7 +10,7 @@ class WindowsAudioEngine(AudioEngine):
     Orchestrates the audio capture and processing subsystem on Windows.
     """
 
-    def __init__(self, settings_manager):
+    def __init__(self, settings_manager) -> None:
         self.logger = logging.getLogger(__name__)
         self.settings = settings_manager
         self.worker: Optional[AudioCaptureWorker] = None

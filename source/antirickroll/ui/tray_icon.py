@@ -6,7 +6,7 @@ from antirickroll.core.paths import get_resource_path
 
 class AntiRickRollTray(QSystemTrayIcon):
     """System tray icon with context menu for background operation."""
-    def __init__(self, main_window, detection_service, parent=None):
+    def __init__(self, main_window, detection_service, parent=None) -> None:
         super().__init__(parent)
         self.main_window = main_window
         self.service = detection_service

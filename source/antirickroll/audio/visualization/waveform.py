@@ -11,7 +11,7 @@ class WaveformWidget(QWidget):
     Optimized for performance using QPainter.
     """
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.setMinimumHeight(150)
         self.data = np.zeros(0)
@@ -70,7 +70,7 @@ class WaveformWidget(QWidget):
 
 class PeakMeter(QWidget):
     """A simple peak level meter."""
-    def __init__(self, parent=None):
+    def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.setFixedWidth(20)
         self.level = 0.0 # 0.0 to 1.0

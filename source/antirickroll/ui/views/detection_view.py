@@ -10,7 +10,7 @@ from antirickroll.core.states import AppState
 class DetectionView(QWidget):
     """Real-time detection dashboard."""
 
-    def __init__(self, detection_service, parent=None):
+    def __init__(self, detection_service, parent=None) -> None:
         super().__init__(parent)
         self.service = detection_service
         self._setup_ui()

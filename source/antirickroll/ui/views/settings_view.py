@@ -2,14 +2,14 @@
 
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QFormLayout, QSlider, QCheckBox, QLabel,
-    QGroupBox, QPushButton, QHBoxLayout, QScrollArea, QTabWidget
+    QGroupBox, QPushButton, QHBoxLayout, QTabWidget
 )
 from PySide6.QtCore import Qt
 
 class SettingsView(QWidget):
     """Professional categorized settings panel."""
 
-    def __init__(self, settings_manager, parent=None):
+    def __init__(self, settings_manager, parent=None) -> None:
         super().__init__(parent)
         self.settings = settings_manager
         self._setup_ui()

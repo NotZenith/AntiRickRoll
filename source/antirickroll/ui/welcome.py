@@ -6,7 +6,7 @@ from PySide6.QtCore import Qt
 class WelcomeDialog(QDialog):
     """Simple onboarding dialog."""
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.setWindowTitle("Welcome to AntiRickRoll")
         self.setFixedSize(500, 400)

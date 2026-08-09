@@ -7,7 +7,7 @@ from typing import List, Optional, Dict
 class AudioDeviceManager:
     """Manages audio devices and identifies WASAPI loopback sources."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self._wasapi_host_index = self._find_wasapi_host()
 

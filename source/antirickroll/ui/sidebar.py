@@ -7,7 +7,7 @@ class Sidebar(QWidget):
     """Navigation sidebar with category buttons."""
     nav_changed = Signal(str)
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self._setup_ui()
 

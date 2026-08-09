@@ -8,7 +8,7 @@ from antirickroll.core.exceptions import SettingsError
 class SettingsManager:
     """Manages application settings with auto-save and validation."""
 
-    def __init__(self, config_path: Path):
+    def __init__(self, config_path: Path) -> None:
         self._config_path = config_path
         self._settings: Dict[str, Any] = self._get_defaults()
         self.load()

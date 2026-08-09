@@ -2,7 +2,7 @@
 
 import logging
 import time
-from typing import Optional, Dict
+from typing import Optional
 from PySide6.QtCore import QObject, Signal
 from antirickroll.detection.models import DetectionResult
 from antirickroll.core.states import AppState
@@ -20,7 +20,7 @@ class DetectionService(QObject):
     status_updated = Signal(str)
     state_changed = Signal(AppState)
 
-    def __init__(self, settings):
+    def __init__(self, settings) -> None:
         super().__init__()
         self.logger = logging.getLogger(__name__)
         self.settings = settings

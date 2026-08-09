@@ -2,7 +2,6 @@
 
 import logging
 import platform
-from typing import Optional
 
 # Only import winsound on Windows
 if platform.system() == "Windows":
@@ -13,7 +12,7 @@ else:
 class NotificationManager:
     """Handles audible alerts and system tray notifications."""
 
-    def __init__(self, tray_icon, settings):
+    def __init__(self, tray_icon, settings) -> None:
         self.logger = logging.getLogger(__name__)
         self.tray = tray_icon
         self.settings = settings

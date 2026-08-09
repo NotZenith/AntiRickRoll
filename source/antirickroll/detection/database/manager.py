@@ -2,7 +2,6 @@
 
 import json
 import logging
-import os
 from pathlib import Path
 from typing import Dict, List, Optional
 from antirickroll.detection.models import FingerprintPackage, FingerprintMetadata
@@ -13,7 +12,7 @@ class FingerprintDatabase:
     Supports a plugin-like architecture where packages are stored in files.
     """
 
-    def __init__(self, storage_path: Path):
+    def __init__(self, storage_path: Path) -> None:
         self.logger = logging.getLogger(__name__)
         self.storage_path = storage_path
         self.packages: Dict[str, FingerprintPackage] = {}

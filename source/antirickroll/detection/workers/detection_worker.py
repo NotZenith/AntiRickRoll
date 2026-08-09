@@ -1,7 +1,6 @@
 """Background worker for continuous audio detection."""
 
 import logging
-import time
 import numpy as np
 from PySide6.QtCore import QThread, Signal
 from antirickroll.detection.analysis.spectrogram import SpectrogramGenerator
@@ -20,7 +19,7 @@ class DetectionWorker(QThread):
     status_changed = Signal(str)
     error_occurred = Signal(str)
 
-    def __init__(self, audio_engine, matching_engine, settings):
+    def __init__(self, audio_engine, matching_engine, settings) -> None:
         super().__init__()
         self.logger = logging.getLogger(__name__)
         self.audio_engine = audio_engine

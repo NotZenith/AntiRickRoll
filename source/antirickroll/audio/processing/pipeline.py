@@ -7,7 +7,7 @@ from antirickroll.audio.processing.stages import ProcessingStage
 class AudioPipeline:
     """Orchestrates multiple processing stages."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.stages: List[ProcessingStage] = []
 
     def add_stage(self, stage: ProcessingStage) -> None:

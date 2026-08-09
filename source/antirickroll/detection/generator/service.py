@@ -22,7 +22,7 @@ class FingerprintGenerator:
         sample_rate: int = 44100,
         n_fft: int = 2048,
         hop_length: int = 512
-    ):
+    ) -> None:
         self.logger = logging.getLogger(__name__)
         self.sample_rate = sample_rate
 

@@ -19,6 +19,13 @@ All notable changes to this project will be documented in this file.
 
 ## [0.5.0] - 2026-08-08
 
+### Added
+- **Production Packaging:** Established professional Windows distribution pipeline.
+- **Build Script:** Automated EXE generation using PyInstaller.
+- **Restructured Repository:** Clean separation of source, tests, assets, and docs.
+- **Path Resolution:** Implemented professional user data and resource path handling.
+- **GitHub Release Workflow:** Automated CI/CD for creating production releases.
+
 ## [0.4.0] - 2026-08-08
 
 ### Added

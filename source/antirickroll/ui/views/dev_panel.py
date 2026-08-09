@@ -3,14 +3,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QTextEdit, QLabel, QTabWidget
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QTextEdit, QTabWidget
 from PySide6.QtCore import Qt
 from antirickroll.detection.analysis.spectrogram import SpectrogramGenerator
 
 class DevPanel(QWidget):
     """Hidden developer panel for advanced diagnostics."""
 
-    def __init__(self, audio_engine, parent=None):
+    def __init__(self, audio_engine, parent=None) -> None:
         super().__init__(parent)
         self.engine = audio_engine
         self.setWindowTitle("AntiRickRoll Developer Diagnostics")

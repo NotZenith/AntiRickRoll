@@ -2,7 +2,7 @@
 
 import threading
 import numpy as np
-from typing import Optional, Tuple
+from typing import Optional
 
 class CircularBuffer:
     """
@@ -10,7 +10,7 @@ class CircularBuffer:
     Uses numpy for efficient data handling.
     """
 
-    def __init__(self, capacity: int, channels: int = 2, dtype: np.dtype = np.float32):
+    def __init__(self, capacity: int, channels: int = 2, dtype: np.dtype = np.float32) -> None:
         self.capacity = capacity
         self.channels = channels
         self.dtype = dtype

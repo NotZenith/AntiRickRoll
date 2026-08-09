@@ -14,7 +14,7 @@ class PeakDetector:
         neighborhood_size: int = 20,
         min_amplitude: float = -50.0,
         max_peaks: int = 1000
-    ):
+    ) -> None:
         self.neighborhood_size = neighborhood_size
         self.min_amplitude = min_amplitude
         self.max_peaks = max_peaks

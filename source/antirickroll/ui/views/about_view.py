@@ -3,11 +3,12 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton
 from PySide6.QtCore import Qt
 import webbrowser
+from antirickroll import __version__
 
 class AboutView(QWidget):
     """View showing application information and credits."""
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self._setup_ui()
 
@@ -22,7 +23,7 @@ class AboutView(QWidget):
         layout.addWidget(title, alignment=Qt.AlignCenter)
 
         # Version
-        version = QLabel("Version 0.5.0")
+        version = QLabel(f"Version {__version__}")
         version.setStyleSheet("font-size: 16px; color: #888;")
         layout.addWidget(version, alignment=Qt.AlignCenter)
 

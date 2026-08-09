@@ -13,7 +13,7 @@ class LandmarkHasher:
         fan_value: int = 15,
         min_time_delta: int = 0,
         max_time_delta: int = 200
-    ):
+    ) -> None:
         self.fan_value = fan_value
         self.min_time_delta = min_time_delta
         self.max_time_delta = max_time_delta

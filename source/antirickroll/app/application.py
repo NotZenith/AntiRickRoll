@@ -3,7 +3,8 @@
 import sys
 import logging
 from pathlib import Path
-from PySide6.QtWidgets import QApplication, QMessageBox
+from typing import Any
+from PySide6.QtWidgets import QApplication, QMessageBox, QSystemTrayIcon
 from antirickroll.core.settings import SettingsManager
 from antirickroll.core.logger import setup_logging
 from antirickroll.ui.main_window import MainWindow
@@ -14,12 +15,13 @@ from antirickroll.detection.database.manager import FingerprintDatabase
 from antirickroll.detection.matching.engine import MatchingEngine
 from antirickroll.detection.workers.detection_worker import DetectionWorker
 from antirickroll.detection.service import DetectionService
+from antirickroll.detection.models import DetectionResult
 from antirickroll.core.notifications import NotificationManager
 from antirickroll.core.paths import get_user_data_dir, get_plugins_dir
 
 class AntiRickRollApp:
     """Handles application lifecycle, core components, and UI."""
-    def __init__(self):
+    def __init__(self) -> None:
         self.app = QApplication(sys.argv)
         self.app.setApplicationName("AntiRickRoll")
 
@@ -47,7 +49,7 @@ class AntiRickRollApp:
 
         self._connect_signals()
 
-    def _connect_signals(self):
+    def _connect_signals(self) -> None:
         self.tray.activated.connect(self._on_tray_activated)
         # Handle Exit from tray
         self.tray.exit_action.triggered.connect(self.shutdown)
@@ -58,11 +60,11 @@ class AntiRickRollApp:
         self.detection_worker.result_ready.connect(self.detection_service.handle_raw_result)
         self.detection_service.detection_confirmed.connect(self._on_detection_confirmed)
 
-    def _on_tray_activated(self, reason):
-        if reason == AntiRickRollTray.Trigger:
+    def _on_tray_activated(self, reason: QSystemTrayIcon.ActivationReason) -> None:
+        if reason == QSystemTrayIcon.Trigger:
             self.main_window.show()
 
-    def _on_detection_confirmed(self, result):
+    def _on_detection_confirmed(self, result: DetectionResult) -> None:
         self.notifications.play_alert_sound()
         self.notifications.notify(
             "AntiRickRoll Alert!",
@@ -70,7 +72,7 @@ class AntiRickRollApp:
             "warning"
         )
 
-    def _toggle_monitoring(self):
+    def _toggle_monitoring(self) -> None:
         if self.audio_engine.worker and not self.audio_engine.worker.paused:
             self.audio_engine.pause()
             self.tray.pause_action.setText("Resume Monitoring")
@@ -80,7 +82,7 @@ class AntiRickRollApp:
             self.tray.pause_action.setText("Pause Monitoring")
             self.tray.status_action.setText("Status: Monitoring")
 
-    def run(self):
+    def run(self) -> None:
         """Starts the application."""
         if self.settings.get("first_run", True):
             welcome = WelcomeDialog()
@@ -96,7 +98,7 @@ class AntiRickRollApp:
         self.detection_worker.start()
         sys.exit(self.app.exec())
 
-    def shutdown(self):
+    def shutdown(self) -> None:
         """Gracefully shuts down the application."""
         logging.info("Shutting down...")
         self.detection_worker.stop()
@@ -104,7 +106,7 @@ class AntiRickRollApp:
         self.settings.save()
         self.app.quit()
 
-def handle_exception(exc_type, exc_value, exc_traceback):
+def handle_exception(exc_type: type, exc_value: Exception, exc_traceback: Any) -> None:
     """Global exception handler to show a crash dialog."""
     if issubclass(exc_type, KeyboardInterrupt):
         sys.__excepthook__(exc_type, exc_value, exc_traceback)

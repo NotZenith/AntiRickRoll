@@ -23,7 +23,7 @@ class AudioCaptureWorker(QThread):
     state_changed = Signal(AudioState)
     error_occurred = Signal(str)        # Error messages
 
-    def __init__(self, settings_manager):
+    def __init__(self, settings_manager) -> None:
         super().__init__()
         self.logger = logging.getLogger(__name__)
         self.settings = settings_manager
@@ -119,6 +119,7 @@ class AudioCaptureWorker(QThread):
         self._stream.start()
         self._set_state(AudioState.CAPTURING)
         self.status_changed.emit(f"Capturing: {device_info['name']}", True)
+        self._last_default_device = sd.default.device[1]
 
     def _stop_capture(self):
         """Stops the audio stream."""

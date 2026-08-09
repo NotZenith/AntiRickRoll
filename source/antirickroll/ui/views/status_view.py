@@ -10,7 +10,7 @@ from antirickroll.audio.visualization.waveform import WaveformWidget, PeakMeter
 class StatusView(QWidget):
     """Main status view with audio visualization and controls."""
 
-    def __init__(self, audio_engine, parent=None):
+    def __init__(self, audio_engine, parent=None) -> None:
         super().__init__(parent)
         self.engine = audio_engine
         self._setup_ui()

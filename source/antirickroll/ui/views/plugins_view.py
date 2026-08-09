@@ -8,7 +8,7 @@ from PySide6.QtCore import Qt
 class PluginsView(QWidget):
     """View to manage fingerprint plugins."""
 
-    def __init__(self, database, parent=None):
+    def __init__(self, database, parent=None) -> None:
         super().__init__(parent)
         self.db = database
         self._setup_ui()

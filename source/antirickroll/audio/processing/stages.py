@@ -3,7 +3,6 @@
 import numpy as np
 from abc import ABC, abstractmethod
 from scipy import signal
-from typing import Optional
 
 class ProcessingStage(ABC):
     """Abstract base class for a processing stage."""
@@ -13,7 +12,7 @@ class ProcessingStage(ABC):
 
 class Normalizer(ProcessingStage):
     """Normalizes audio amplitude."""
-    def __init__(self, target_peak: float = 0.9):
+    def __init__(self, target_peak: float = 0.9) -> None:
         self.target_peak = target_peak
 
     def process(self, data: np.ndarray) -> np.ndarray:
@@ -24,7 +23,7 @@ class Normalizer(ProcessingStage):
 
 class ChannelConverter(ProcessingStage):
     """Converts audio between channel counts."""
-    def __init__(self, target_channels: int = 1):
+    def __init__(self, target_channels: int = 1) -> None:
         self.target_channels = target_channels
 
     def process(self, data: np.ndarray) -> np.ndarray:
@@ -44,7 +43,7 @@ class ChannelConverter(ProcessingStage):
 
 class Resampler(ProcessingStage):
     """Resamples audio to a target sample rate."""
-    def __init__(self, source_sr: int, target_sr: int):
+    def __init__(self, source_sr: int, target_sr: int) -> None:
         self.source_sr = source_sr
         self.target_sr = target_sr
 
@@ -58,7 +57,7 @@ class Resampler(ProcessingStage):
 
 class Windowing(ProcessingStage):
     """Applies a window function (e.g., Hann) to the audio frames."""
-    def __init__(self, window_type: str = "hann"):
+    def __init__(self, window_type: str = "hann") -> None:
         self.window_type = window_type
         self._window_cache: Optional[np.ndarray] = None
         self._last_size = 0

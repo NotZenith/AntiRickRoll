@@ -2,7 +2,7 @@
 
 import numpy as np
 from scipy import signal
-from typing import Optional, Tuple
+from typing import Tuple
 
 class SpectrogramGenerator:
     """
@@ -15,7 +15,7 @@ class SpectrogramGenerator:
         hop_length: int = 512,
         window: str = "hann",
         sample_rate: int = 44100
-    ):
+    ) -> None:
         self.n_fft = n_fft
         self.hop_length = hop_length
         self.window = window

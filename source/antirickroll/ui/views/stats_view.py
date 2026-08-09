@@ -1,12 +1,11 @@
 """Statistics view for audio engine metrics."""
 
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QLabel, QGroupBox
-from PySide6.QtCore import Qt
 
 class StatsView(QWidget):
     """Displays real-time performance and audio metrics."""
 
-    def __init__(self, audio_engine, parent=None):
+    def __init__(self, audio_engine, parent=None) -> None:
         super().__init__(parent)
         self.engine = audio_engine
         self._setup_ui()

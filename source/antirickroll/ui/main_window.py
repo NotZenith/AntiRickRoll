@@ -1,7 +1,7 @@
 """Main application window."""
 
 import logging
-from PySide6.QtWidgets import QMainWindow, QHBoxLayout, QWidget, QStackedWidget, QLabel
+from PySide6.QtWidgets import QMainWindow, QHBoxLayout, QWidget, QStackedWidget
 from antirickroll.ui.sidebar import Sidebar
 from antirickroll.ui.styles import DARK_THEME
 from antirickroll.ui.views.status_view import StatusView
@@ -15,7 +15,7 @@ from PySide6.QtGui import QShortcut, QKeySequence
 
 class MainWindow(QMainWindow):
     """Main window with sidebar navigation and content area."""
-    def __init__(self, audio_engine, detection_service, database, settings):
+    def __init__(self, audio_engine, detection_service, database, settings) -> None:
         super().__init__()
         self.audio_engine = audio_engine
         self.detection_service = detection_service
@@ -83,7 +83,7 @@ class MainWindow(QMainWindow):
         else:
             self.dev_panel.show()
 
-    def _on_nav_changed(self, label: str):
+    def _on_nav_changed(self, label: str) -> None:
         logging.info(f"Navigation changed to: {label}")
         indices = {
             "Status": 0,

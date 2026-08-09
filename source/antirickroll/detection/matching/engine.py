@@ -13,7 +13,7 @@ class MatchingEngine:
     using a time-offset histogram.
     """
 
-    def __init__(self, database: FingerprintDatabase, min_confidence: float = 0.5):
+    def __init__(self, database: FingerprintDatabase, min_confidence: float = 0.5) -> None:
         self.logger = logging.getLogger(__name__)
         self.db = database
         self.min_confidence = min_confidence

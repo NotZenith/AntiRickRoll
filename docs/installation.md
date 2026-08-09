@@ -7,8 +7,8 @@ This guide provides instructions for both regular users and developers.
 AntiRickRoll is distributed as a portable Windows application. You do not need to install Python or any other tools.
 
 1.  Visit the [GitHub Releases](https://github.com/NotZenith/AntiRickRoll/releases) page.
-2.  Find the latest version (e.g., `v0.5.0`).
-3.  Download the `AntiRickRoll.zip` file.
+2.  Find the latest version (e.g., `v0.6.0`).
+3.  Download the `AntiRickRoll-v0.6.0-Windows-x64.zip` file.
 4.  Right-click the ZIP file and select **Extract All...**.
 5.  Open the extracted folder and double-click **AntiRickRoll.exe**.
 
