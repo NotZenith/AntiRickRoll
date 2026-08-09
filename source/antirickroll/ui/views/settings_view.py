@@ -5,6 +5,7 @@ from PySide6.QtWidgets import (
     QGroupBox, QPushButton, QHBoxLayout, QTabWidget
 )
 from PySide6.QtCore import Qt
+from antirickroll.core.utils import set_start_on_boot
 
 class SettingsView(QWidget):
     """Professional categorized settings panel."""
@@ -110,7 +111,10 @@ class SettingsView(QWidget):
         self.settings.set("enable_notifications", self.enable_notif_cb.isChecked())
         self.settings.set("enable_beep", self.enable_beep_cb.isChecked())
         self.settings.set("minimize_to_tray", self.minimize_cb.isChecked())
-        self.settings.set("auto_start", self.auto_start_cb.isChecked())
+
+        auto_start = self.auto_start_cb.isChecked()
+        self.settings.set("auto_start", auto_start)
+        set_start_on_boot(auto_start)
 
         det_cfg = self.settings.get("detection", {})
         det_cfg["min_confidence"] = self.confidence_slider.value() / 100.0

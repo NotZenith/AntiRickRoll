@@ -1,9 +1,11 @@
 """About page for AntiRickRoll."""
 
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QMessageBox
-from PySide6.QtCore import Qt
 import webbrowser
-from antirickroll import __version__
+
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QHBoxLayout, QLabel, QMessageBox, QPushButton, QVBoxLayout, QWidget
+
+import antirickroll
 
 class AboutView(QWidget):
     """View showing application information and credits."""
@@ -23,7 +25,7 @@ class AboutView(QWidget):
         layout.addWidget(title, alignment=Qt.AlignCenter)
 
         # Version
-        version = QLabel(f"Version {__version__}")
+        version = QLabel(f"Version {antirickroll.__version__}")
         version.setStyleSheet("font-size: 16px; color: #888;")
         layout.addWidget(version, alignment=Qt.AlignCenter)
 

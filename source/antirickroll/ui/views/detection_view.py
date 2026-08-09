@@ -1,11 +1,12 @@
 """Main dashboard view for real-time detection monitoring."""
 
+from PySide6.QtCore import Slot
 from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QProgressBar, QListWidget, QFrame
+    QFrame, QLabel, QListWidget, QProgressBar, QVBoxLayout, QWidget
 )
-from PySide6.QtCore import Qt, Slot
-from antirickroll.detection.models import DetectionResult
+
 from antirickroll.core.states import AppState
+from antirickroll.detection.models import DetectionResult
 
 class DetectionView(QWidget):
     """Real-time detection dashboard."""
