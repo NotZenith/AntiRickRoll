@@ -4,7 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QTextEdit, QTabWidget
-from PySide6.QtCore import Qt
 from antirickroll.detection.analysis.spectrogram import SpectrogramGenerator
 
 class DevPanel(QWidget):

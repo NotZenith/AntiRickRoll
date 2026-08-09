@@ -4,7 +4,6 @@ import numpy as np
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QFrame
 )
-from PySide6.QtCore import Qt
 from antirickroll.audio.visualization.waveform import WaveformWidget, PeakMeter
 
 class StatusView(QWidget):

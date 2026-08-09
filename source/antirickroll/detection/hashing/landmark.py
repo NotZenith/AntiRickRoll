@@ -1,7 +1,7 @@
 """Landmark-based hashing for audio fingerprints."""
 
 import hashlib
-from typing import List, Tuple, Dict
+from typing import List, Tuple
 
 class LandmarkHasher:
     """
