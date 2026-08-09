@@ -1,6 +1,6 @@
 """About page for AntiRickRoll."""
 
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QMessageBox
 from PySide6.QtCore import Qt
 import webbrowser
 from antirickroll import __version__
@@ -72,7 +72,6 @@ class AboutView(QWidget):
         layout.addStretch()
 
     def _show_privacy(self):
-        from PySide6.QtWidgets import QMessageBox
         msg = QMessageBox(self)
         msg.setWindowTitle("AntiRickRoll Privacy Policy")
         msg.setText(
