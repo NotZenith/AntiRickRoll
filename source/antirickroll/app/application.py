@@ -4,6 +4,7 @@ import sys
 import logging
 from pathlib import Path
 from typing import Any
+import platform
 from PySide6.QtWidgets import QApplication, QMessageBox, QSystemTrayIcon
 from antirickroll.core.settings import SettingsManager
 from antirickroll.core.logger import setup_logging
@@ -22,6 +23,7 @@ from antirickroll.core.paths import get_user_data_dir, get_plugins_dir
 class AntiRickRollApp:
     """Handles application lifecycle, core components, and UI."""
     def __init__(self) -> None:
+        self._check_os_compatibility()
         self.app = QApplication(sys.argv)
         self.app.setApplicationName("AntiRickRoll")
 
@@ -48,6 +50,12 @@ class AntiRickRollApp:
         self.notifications = NotificationManager(self.tray, self.settings)
 
         self._connect_signals()
+
+    def _check_os_compatibility(self) -> None:
+        """Verifies that the application is running on Windows."""
+        if platform.system() != "Windows":
+            print("AntiRickRoll is only supported on Windows.")
+            sys.exit(1)
 
     def _connect_signals(self) -> None:
         self.tray.activated.connect(self._on_tray_activated)
