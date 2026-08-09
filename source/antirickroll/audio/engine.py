@@ -11,6 +11,7 @@ class WindowsAudioEngine(AudioEngine):
     """
 
     def __init__(self, settings_manager) -> None:
+        """Initialize the Windows audio engine."""
         self.logger = logging.getLogger(__name__)
         self.settings = settings_manager
         self.worker: Optional[AudioCaptureWorker] = None
