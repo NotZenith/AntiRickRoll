@@ -24,7 +24,9 @@ class FingerprintPackage:
 
 @dataclass
 class DetectionResult:
-    """The result of a detection attempt."""
+    """The result of a detection attempt.
+    Contains information about matched fingerprints and confidence scores.
+    """
     success: bool
     fingerprint_id: Optional[str] = None
     name: Optional[str] = None
