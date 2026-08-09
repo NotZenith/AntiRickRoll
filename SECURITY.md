@@ -11,9 +11,9 @@ Currently, only the latest release is supported for security updates.
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability, please do NOT open a public issue. Instead, report it privately via email to `security@antirickroll.org` (placeholder).
+If you discover a security vulnerability, please do NOT open a public issue. Instead, report it privately via email to `security@antirickroll.org`.
 
-We will acknowledge your report within 48 hours and provide a timeline for a fix.
+Our team will investigate and provide a fix within 72 hours.
 
 ## Privacy Principles
 1.  **Local Only:** AntiRickRoll does not upload audio, fingerprints, or metadata to any server.
