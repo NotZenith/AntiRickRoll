@@ -26,4 +26,5 @@ AntiRickRoll is built using a modular, event-driven architecture designed for lo
 - **Paths:** Bundled vs. Source path resolution.
 
 ## Data Flow
+The following sequence describes the real-time processing chain:
 `Windows Audio` -> `WASAPI Capture` -> `Circular Buffer` -> `Spectrogram` -> `Hashing` -> `Matcher` -> `Stability Filter` -> `UI/Notification`
