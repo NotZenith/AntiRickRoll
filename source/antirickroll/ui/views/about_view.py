@@ -1,8 +1,10 @@
 """About page for AntiRickRoll."""
 
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QMessageBox
-from PySide6.QtCore import Qt
 import webbrowser
+
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QHBoxLayout, QLabel, QMessageBox, QPushButton, QVBoxLayout, QWidget
+
 import antirickroll
 
 class AboutView(QWidget):
