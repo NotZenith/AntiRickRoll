@@ -31,6 +31,10 @@ class CircularBuffer:
         :param data: numpy array of shape (n_frames, channels)
         :return: number of frames written
         """
+        # Phase 21: DSP Safety - Handle NaN/Inf
+        if not np.isfinite(data).all():
+            data = np.nan_to_num(data)
+
         n_frames = data.shape[0]
         with self._lock:
             if n_frames > self.capacity - self.size:

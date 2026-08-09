@@ -16,8 +16,12 @@ class Normalizer(ProcessingStage):
         self.target_peak = target_peak
 
     def process(self, data: np.ndarray) -> np.ndarray:
+        # Phase 21: DSP Safety - Check for empty or non-finite data
+        if data.size == 0 or not np.isfinite(data).all():
+            return data
+
         peak = np.max(np.abs(data))
-        if peak > 0:
+        if peak > 1e-6: # Avoid division by near-zero
             return data * (self.target_peak / peak)
         return data
 
