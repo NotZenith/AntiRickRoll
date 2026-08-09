@@ -49,4 +49,4 @@ pip install -e .[dev]
 - **Privacy Policy:** AntiRickRoll does not collect, store, or transmit audio data.
 
 ---
-*Created with ❤️ to preserve the sanity of the internet.*
+*Created with ❤️ by the AntiRickRoll Team.*
