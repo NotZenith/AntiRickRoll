@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0] - 2026-08-09
+
+### Added
+- **Stability Pass:** Improved DSP safety for `NaN` and `Inf` values in circular buffer and processing pipeline.
+- **Production Ready:** Officially declared v1.0.0 after successful CI fixes and UI polish.
+
+### Fixed
+- **UI Test Failure:** Resolved `NameError: name 'QHBoxLayout' is not defined` in `AboutView`.
+- **Import Cleanup:** Optimized imports and fixed missing dependencies in UI modules.
+
 ## [0.6.0] - 2026-08-08
 
 ### Added
