@@ -1,4 +1,6 @@
-"""Modern dark theme styles for PySide6."""
+"""Modern dark theme styles for PySide6.
+Maintains a consistent Windows 11 aesthetic throughout the app.
+"""
 
 DARK_THEME = """
 QMainWindow {
