@@ -40,9 +40,8 @@ class DetectionWorker(QThread):
         self.hasher = LandmarkHasher()
 
         # Sliding window configuration
-        # 1024 * 16 is ~0.37s at 44.1kHz. We'll take a larger chunk for better fingerprinting.
-        self.window_size = 44100 * 5  # 5 seconds of audio
-        self.poll_interval = 0.5     # Run detection every 0.5s
+        self.window_size = 44100 * 4  # Reduced to 4s for slightly lower latency
+        self.poll_interval = 0.4     # Run detection every 0.4s
 
     def run(self):
         """Main loop for the detection worker."""
