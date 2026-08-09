@@ -7,6 +7,7 @@ from antirickroll.audio.engine import WindowsAudioEngine
 from antirickroll.core.settings import SettingsManager
 from antirickroll.detection.service import DetectionService
 from antirickroll.detection.database.manager import FingerprintDatabase
+from antirickroll.ui.views.about_view import AboutView
 from pathlib import Path
 
 @pytest.fixture(scope="session")
@@ -25,3 +26,7 @@ def test_main_window_init(qapp, tmp_path):
     assert window.windowTitle() == "AntiRickRoll"
     assert window.sidebar is not None
     assert window.content_area is not None
+
+def test_about_view_init(qapp):
+    view = AboutView()
+    assert view is not None
