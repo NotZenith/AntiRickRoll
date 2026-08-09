@@ -1,7 +1,7 @@
 """Main dashboard view for real-time detection monitoring."""
 
 from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QProgressBar, QListWidget, QFrame
+    QWidget, QVBoxLayout, QLabel, QProgressBar, QListWidget, QFrame
 )
 from PySide6.QtCore import Qt, Slot
 from antirickroll.detection.models import DetectionResult
