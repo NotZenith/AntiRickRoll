@@ -1,7 +1,6 @@
 """General utility functions for AntiRickRoll."""
 
 import sys
-from pathlib import Path
 import logging
 
 def set_start_on_boot(enabled: bool) -> bool:
