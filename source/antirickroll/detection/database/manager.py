@@ -34,11 +34,24 @@ class FingerprintDatabase:
 
     def load_package(self, path: Path) -> None:
         """Loads a single fingerprint package from a JSON file."""
-        with open(path, "r") as f:
-            data = json.load(f)
+        try:
+            with open(path, "r") as f:
+                data = json.load(f)
+        except (json.JSONDecodeError, OSError) as e:
+            self.logger.error(f"Failed to read fingerprint file {path}: {e}")
+            return
 
-        metadata = FingerprintMetadata(**data["metadata"])
-        package = FingerprintPackage(metadata=metadata, hashes=data["hashes"])
+        # Phase 26: Validation
+        if "metadata" not in data or "hashes" not in data:
+            self.logger.error(f"Malformed fingerprint file: {path}")
+            return
+
+        try:
+            metadata = FingerprintMetadata(**data["metadata"])
+            package = FingerprintPackage(metadata=metadata, hashes=data["hashes"])
+        except (TypeError, KeyError) as e:
+            self.logger.error(f"Invalid fingerprint data in {path}: {e}")
+            return
 
         self.packages[metadata.id] = package
         self._index_package(package)
