@@ -24,3 +24,5 @@ plugins/fingerprints/*.json
 # OS
 .DS_Store
 Thumbs.db
+
+.idea/
