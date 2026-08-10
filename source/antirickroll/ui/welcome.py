@@ -43,8 +43,23 @@ class WelcomeDialog(QDialog):
 
         self.settings_btn = QPushButton("Settings")
         self.settings_btn.setFixedSize(100, 40)
-        self.settings_btn.clicked.connect(self.reject) # We'll handle this in app logic
+        self.settings_btn.clicked.connect(self.reject)
+
+        self.privacy_btn = QPushButton("Privacy")
+        self.privacy_btn.setFixedSize(100, 40)
+        self.privacy_btn.clicked.connect(self._show_privacy)
 
         btn_layout.addWidget(self.start_btn)
         btn_layout.addWidget(self.settings_btn)
+        btn_layout.addWidget(self.privacy_btn)
         layout.addLayout(btn_layout)
+
+    def _show_privacy(self):
+        from PySide6.QtWidgets import QMessageBox
+        msg = QMessageBox(self)
+        msg.setWindowTitle("AntiRickRoll Privacy Policy")
+        msg.setText(
+            "<b>Your data stays on your machine.</b><br><br>"
+            "AntiRickRoll analyzes audio locally and never uploads data to the cloud."
+        )
+        msg.exec()
